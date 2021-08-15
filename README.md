@@ -30,4 +30,53 @@ This code above will console.log all the letter in the alphebet(both uppercase a
 ````Javascript
  for (; i <= j; ++i) 
 ````
-I assume that without the first argument in the for-loop, `i` will be set to `0`. I assume that is correct given that it would make since to make the function work. 
+I assume that without the first argument in the for-loop, `i = charA.charCodeAt(0)`. I assume that is correct given that it would make since to make the function work. And since it is difined as so above the for-loop
+
+----
+
+## 8/15/21
+As I was breaking down the project into more manegable pieces, I was focusing on validating the values entered by a user when they are prompted for a the length of the desired password. Well, I was going through, I first thought of using an if-statement like so:
+````Javascript
+
+  while(!(input >= 8 && input <= 128)){
+     alert('Please enter values between 8 and 128');
+     input = prompt("Enter length of password");
+ }
+````
+I also had another if-statement that uses a `parseInt()` and `toString()` method to be able to check whether the integer would equal itself if it was parsed into an int. Given that the prompt always returns a string, thought this methods was the easiest. 
+````Javascript
+while(input !== parseInt(input, 10).toString()){
+    alert("Please enter only numbers");
+    input = prompt("Enter length of password", "#");
+  }
+````
+
+I decided to just combine the two statements into one whole while-statement. I added two if-statements within those to capture the correct errors that the user types into the prompt.
+
+````Javascript
+while(input !== parseInt(input, 10).toString() || (!(input >= 8 && input <= 128))){
+    if(input !== parseInt(input, 10).toString()){
+      alert("Please enter only numbers");
+      input = prompt("Enter length of password", "#");
+    } else {
+      alert("Please enter values between 8-128");
+      input = prompt("Enter length of password", "#");
+    }
+  }
+````
+After some more work, I was able to create a function that is able to return whether or not the user intends on having lowercase in their password. This structure may help me save time on building the other criteria
+````Javascript
+function includeLowercase(){
+  let include; 
+  include = prompt("Do you want lowercase in the password", "Please enter yes or no");
+  while(!(include == "yes" || include == "no")){
+    alert("Please Enter 'yes' or 'no'");
+    include = prompt("Do you want lowercase in the password", "Please enter yes or no");
+  }
+
+  if(include == "no")
+    return false;
+  else 
+    return true;
+}
+````
