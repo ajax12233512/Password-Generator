@@ -15,27 +15,76 @@ generateBtn.addEventListener("click", writePassword);
 
 //Algorithm to generate password going here
 function generatePassword(){
-  let length = getLength();
-  let lowercase = includeLowercase();
-  console.log(lowercase);
-  let uppercase = includeUppercase()
-  console.log(uppercase);
-  let specialChar = includeSpecialChar()
-  console.log(specialChar);
+  var length = getLength();
+  var password = [length];
+
+  var lowercase = includeLowercase();
+  var uppercase = includeUppercase()
+  var specialChar = includeSpecialChar()
+
+  var c1 = new Characters;
+  var passwordList = c1.returnCharacterSet(uppercase, lowercase, specialChar);
+
+  for(k = 0; k < length; k++)
+  {
+    password[k] = passwordList[Math.floor(Math.random() * passwordList.length)]
+  }
+
+  password = password.join('')
+  return password;
 }
 
 //Was going to use these arrays but wanted to see if I could generate them instead
 // lowercase = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 // uppercase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M','N', 'O', 'P'];
 
-//Function to generate arrays of alphebet
-function genCharArray(charA, charZ) {
-  var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
-  for (; i <= j; ++i) {
-      a.push(String.fromCharCode(i));
+
+
+//Stored getCharArray and its generated arrays in one object
+class Characters{
+
+  uppercaseArray = this.genCharArray('A','Z');
+  lowercaseArray = this.genCharArray('a', 'z');
+  specialArray = this.genCharArray('!', '*');
+  
+  //this will return one array for the password to pull characters out of based on the criteria set by the user
+  returnCharacterSet(uppercase, lowercase, special){
+    var characterSet = [];
+    
+    if(lowercase === true){
+      for(var k = 0; k < this.lowercaseArray.length; k++){
+        characterSet.push(this.lowercaseArray[k]);
+      }
+    }
+
+    if(uppercase === true){
+      for(var k = 0; k < this.uppercaseArray.length; k++){
+        characterSet.push(this.uppercaseArray[k]);
+      }
+    }
+
+    if(special === true){
+      for(var k = 0; k < this.specialArray.length; k++){
+        characterSet.push(this.specialArray[k]);
+      }
+    }
+
+    console.log(characterSet);
+    return characterSet;
   }
-  return a;
+
+  genCharArray(charA, charZ) {
+    var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
+    for (; i <= j; ++i) {
+        a.push(String.fromCharCode(i));
+    }
+    return a;
+  }
 }
+
+
+
+
 
 //Function for getting correct length
 function getLength(){
@@ -53,7 +102,7 @@ function getLength(){
   }
 
   length = input;
-  console.log("The desired length is " + length);
+  // console.log("The desired length is " + length);
   return length;
 }
 
@@ -76,6 +125,7 @@ function includeLowercase(){
 function includeUppercase(){
   let include; 
   include = prompt("Do you want uppercase in the password?", "Please enter yes or no");
+
   while(!(include == "yes" || include == "no")){
     alert("Please Enter 'yes' or 'no'");
     include = prompt("Do you want uppercase in the password?", "Please enter yes or no");
@@ -87,9 +137,11 @@ function includeUppercase(){
     return true;
 }
 
+//function to determine if user wants special characters
 function includeSpecialChar(){
   let include; 
   include = prompt("Do you want special characters in the password?", "Please enter yes or no");
+
   while(!(include == "yes" || include == "no")){
     alert("Please Enter 'yes' or 'no'");
     include = prompt("Do you want special characters in the password?", "Please enter yes or no");
@@ -100,6 +152,8 @@ function includeSpecialChar(){
   else 
     return true;
 }
+
+
 
 
 

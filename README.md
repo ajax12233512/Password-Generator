@@ -80,3 +80,64 @@ function includeLowercase(){
     return true;
 }
 ````
+### 8/15/21 9:01PM
+So since my last entry I was able to verify input from the user for all other inputs using the template outlined above. In addition to that, I changed my code a bit to make it more organized (Or so I think so). Basically, I created an object called `Characters` and when I need to evoke any information about the letters or symbols, I put all references to those in this object:
+````Javascript
+class Characters{
+
+  uppercaseArray = this.genCharArray('A','Z');
+  lowercaseArray = this.genCharArray('a', 'z');
+  specialArray = this.genCharArray('!', '*');
+  
+  //this will return one array for the password to pull characters out of based on the criteria set by the user
+  returnCharacterSet(uppercase, lowercase, special){
+    let characterSet = [];
+    if(uppercase === true){
+      characterSet += (this.lowercaseArray);  
+      console.log(characterSet);
+    }
+
+    if(lowercase === true){
+      characterSet += (this.uppercaseArray);
+      console.log(characterSet);
+    }
+
+    if(special === true){
+      characterSet += (this.specialArray);
+      console.log(characterSet);
+    }
+
+    console.log(characterSet);
+  }
+
+  genCharArray(charA, charZ) {
+    var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
+    for (; i <= j; ++i) {
+        a.push(String.fromCharCode(i));
+    }
+    return a;
+  }
+}
+````
+I added a method to this class called `returnCharacterSet`. This will probably be refactored soon but the basic idea of it is to return an array that contains all the letters that can be included in the password that the user wants. I just finished creating it and will probably change somethings later. 
+
+In order to keep the array data type, we have to change the `returnCharacterSet` to use `.push()` instead.
+````Javascript
+ if(lowercase === true){
+      for(var k = 0; k < this.lowercaseArray.length; k++){
+        characterSet.push(this.lowercaseArray[k]);
+      }
+    }
+
+    if(uppercase === true){
+      for(var k = 0; k < this.uppercaseArray.length; k++){
+        characterSet.push(this.uppercaseArray[k]);
+      }
+    }
+
+    if(special === true){
+      for(var k = 0; k < this.specialArray.length; k++){
+        characterSet.push(this.specialArray[k]);
+      }
+    }
+````
